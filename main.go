@@ -13,7 +13,7 @@ import (
 
 	"github.com/u6du/ex"
 
-	quic "github.com/lucas-clemente/quic-go"
+	quic "github.com/u6du/quic-go"
 )
 
 const addr = "localhost:4242"
