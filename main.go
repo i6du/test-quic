@@ -107,9 +107,7 @@ func generateTLSConfig() *tls.Config {
 	certPEM := pem.EncodeToMemory(&pem.Block{Type: "CERTIFICATE", Bytes: certDER})
 
 	tlsCert, err := tls.X509KeyPair(certPEM, keyPEM)
-	if err != nil {
-		panic(err)
-	}
+	ex.Panic(err)
 
 	return &tls.Config{
 		Certificates: []tls.Certificate{tlsCert},
