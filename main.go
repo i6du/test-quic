@@ -2,7 +2,6 @@ package main
 
 import (
 	"crypto/ecdsa"
-	"crypto/elliptic"
 	"crypto/rand"
 	"crypto/tls"
 	"crypto/x509"
@@ -12,6 +11,7 @@ import (
 	"log"
 	"math/big"
 
+	"github.com/ethereum/go-ethereum/crypto/secp256k1"
 	"github.com/u6du/ex"
 
 	quic "github.com/lucas-clemente/quic-go"
@@ -95,11 +95,11 @@ func generateTLSConfig() *tls.Config {
 	template := x509.Certificate{SerialNumber: salt}
 
 	//	pubKey, private, err := ed25519.GenerateKey(rand.Reader)
-	private, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
+	private, err := ecdsa.GenerateKey(secp256k1.S256(), rand.Reader)
 	pubKey := private.PublicKey
 	ex.Panic(err)
 	//	certDER, err := x509.CreateCertificate(rand.Reader, &template, &template, pubKey, private)
-	certDER, err := x509.CreateCertificate(rand.Reader, &template, &template, &pubKey, private)
+	certDER, err := x509.CreateCertificate(rand.Reader, &template, &template, pubKey, private)
 	ex.Panic(err)
 
 	privateByte, err := x509.MarshalPKCS8PrivateKey(private)
